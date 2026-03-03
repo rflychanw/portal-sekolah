@@ -8,6 +8,10 @@ class Admin extends Controller
 {
     public function index()
     {
+        // Redirect guru to their own dashboard
+        if (session()->get('role') === 'guru') {
+            return redirect()->to('/admin/guru/dashboard');
+        }
         $teacherModel = new \App\Models\TeacherModel();
 
         $data = [

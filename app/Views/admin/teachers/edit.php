@@ -114,6 +114,14 @@
         </div>
 
         <div class="form-group">
+            <label for="password">Password Login Guru</label>
+            <input type="password" name="password" id="password" class="form-control"
+                placeholder="Masukkan password baru">
+            <p style="font-size: 0.8rem; color: #94A3B8; margin-top: 0.5rem;">Biarkan kosong jika tidak ingin mengubah
+                password. <?= $teacher['password'] ? '✅ Password sudah diset.' : '⚠️ Belum ada password.' ?></p>
+        </div>
+
+        <div class="form-group">
             <label for="subject">Mata Pelajaran *</label>
             <input type="text" name="subject" id="subject" class="form-control"
                 value="<?= old('subject', $teacher['subject']) ?>" required>

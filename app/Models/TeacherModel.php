@@ -12,7 +12,7 @@ class TeacherModel extends Model
     protected $returnType = 'array';
     protected $useSoftDeletes = false;
     protected $protectFields = true;
-    protected $allowedFields = ['name', 'nip', 'subject', 'bio', 'photo'];
+    protected $allowedFields = ['name', 'nip', 'password', 'subject', 'bio', 'photo'];
 
     // Dates
     protected $useTimestamps = true;

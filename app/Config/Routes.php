@@ -36,9 +36,11 @@ $routes->group('admin', function ($routes) {
         $routes->post('update/(:num)', 'Teacher::update/$1');
         $routes->get('delete/(:num)', 'Teacher::delete/$1');
     });
+
+    // Guru Pages (inside admin)
+    $routes->group('guru', function ($routes) {
+        $routes->get('dashboard', 'Guru::dashboard');
+        $routes->get('profile', 'Guru::profile');
+        $routes->get('logout', 'Auth::logout');
+    });
 });
-
-
-
-
-

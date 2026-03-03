@@ -99,6 +99,26 @@
         color: #166534;
         border: 1px solid #BBF7D0;
     }
+
+    .status-badge {
+        padding: 0.35rem 0.85rem;
+        border-radius: 9999px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.35rem;
+    }
+
+    .status-active {
+        background: #DCFCE7;
+        color: #166534;
+    }
+
+    .status-inactive {
+        background: #FEF3C7;
+        color: #92400E;
+    }
 </style>
 
 <div class="header-actions"
@@ -126,13 +146,14 @@
                     <th>Foto</th>
                     <th>Nama / NIP</th>
                     <th>Mata Pelajaran</th>
+                    <th>Status</th>
                     <th>Aksi</th>
                 </tr>
             </thead>
             <tbody>
                 <?php if (empty($teachers)): ?>
                     <tr>
-                        <td colspan="4" style="text-align: center; color: #64748B; padding: 3rem;">Belum ada data guru.</td>
+                        <td colspan="5" style="text-align: center; color: #64748B; padding: 3rem;">Belum ada data guru.</td>
                     </tr>
                 <?php else: ?>
                     <?php foreach ($teachers as $t): ?>
@@ -160,6 +181,17 @@
                                 <span class="badge">
                                     <?= $t['subject'] ?>
                                 </span>
+                            </td>
+                            <td>
+                                <?php if ($t['password']): ?>
+                                    <span class="status-badge status-active">
+                                        <i class="fas fa-check-circle"></i> Aktif
+                                    </span>
+                                <?php else: ?>
+                                    <span class="status-badge status-inactive">
+                                        <i class="fas fa-exclamation-triangle"></i> Belum Aktif
+                                    </span>
+                                <?php endif; ?>
                             </td>
                             <td>
                                 <div style="display: flex; gap: 0.5rem;">

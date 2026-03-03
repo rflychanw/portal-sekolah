@@ -49,9 +49,12 @@ class Teacher extends BaseController
             $photo->move(FCPATH . 'uploads/teachers', $photoName);
         }
 
+        $password = $this->request->getPost('password');
+
         $this->teacherModel->save([
             'name' => $this->request->getPost('name'),
             'nip' => $this->request->getPost('nip'),
+            'password' => $password ? password_hash($password, PASSWORD_DEFAULT) : null,
             'subject' => $this->request->getPost('subject'),
             'bio' => $this->request->getPost('bio'),
             'photo' => $photoName,
@@ -102,13 +105,20 @@ class Teacher extends BaseController
             $photo->move(FCPATH . 'uploads/teachers', $photoName);
         }
 
-        $this->teacherModel->update($id, [
+        $updateData = [
             'name' => $this->request->getPost('name'),
             'nip' => $this->request->getPost('nip'),
             'subject' => $this->request->getPost('subject'),
             'bio' => $this->request->getPost('bio'),
             'photo' => $photoName,
-        ]);
+        ];
+
+        $password = $this->request->getPost('password');
+        if ($password) {
+            $updateData['password'] = password_hash($password, PASSWORD_DEFAULT);
+        }
+
+        $this->teacherModel->update($id, $updateData);
 
         return redirect()->to('admin/teachers')->with('success', 'Data guru berhasil diperbarui.');
     }

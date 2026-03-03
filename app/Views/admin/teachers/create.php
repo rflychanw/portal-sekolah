@@ -105,6 +105,14 @@
         </div>
 
         <div class="form-group">
+            <label for="password">Password Login Guru</label>
+            <input type="password" name="password" id="password" class="form-control"
+                placeholder="Buat password untuk login guru">
+            <p style="font-size: 0.8rem; color: #94A3B8; margin-top: 0.5rem;">Password ini digunakan guru untuk login ke
+                portal.</p>
+        </div>
+
+        <div class="form-group">
             <label for="subject">Mata Pelajaran *</label>
             <input type="text" name="subject" id="subject" class="form-control" value="<?= old('subject') ?>" required
                 placeholder="Contoh: Matematika, Fisika, dsb.">
