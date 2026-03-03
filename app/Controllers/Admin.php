@@ -8,11 +8,13 @@ class Admin extends Controller
 {
     public function index()
     {
+        $teacherModel = new \App\Models\TeacherModel();
+
         $data = [
             'title' => 'Dashboard Admin',
             'stats' => [
                 'students' => 1500,
-                'teachers' => 120,
+                'teachers' => $teacherModel->countAll(),
                 'news' => 45,
                 'messages' => 12
             ]

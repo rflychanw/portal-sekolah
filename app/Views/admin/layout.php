@@ -227,8 +227,15 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a href="#" class="nav-link <?= uri_string() == 'admin/students' ? 'active' : '' ?>">
+                <a href="<?= base_url('admin/students') ?>"
+                    class="nav-link <?= uri_string() == 'admin/students' ? 'active' : '' ?>">
                     <i class="fas fa-users"></i> Data Siswa
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="<?= base_url('admin/teachers') ?>"
+                    class="nav-link <?= strpos(uri_string(), 'admin/teachers') !== false ? 'active' : '' ?>">
+                    <i class="fas fa-chalkboard-teacher"></i> Data Guru
                 </a>
             </li>
 

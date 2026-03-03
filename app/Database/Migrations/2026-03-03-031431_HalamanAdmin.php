@@ -123,6 +123,7 @@ class HalamanAdmin extends Migration
     public function down()
     {
         $this->forge->dropTable('users', true);
+        $this->forge->dropTable('teachers', true);
         $this->forge->dropTable('articles', true);
     }
 

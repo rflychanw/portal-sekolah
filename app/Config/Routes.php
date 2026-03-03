@@ -26,6 +26,16 @@ $routes->group('auth', function ($routes) {
 $routes->group('admin', function ($routes) {
     $routes->get('/', 'Admin::index');
     $routes->get('profile', 'Admin::profile');
+
+    // Teacher Management
+    $routes->group('teachers', function ($routes) {
+        $routes->get('/', 'Teacher::index');
+        $routes->get('create', 'Teacher::create');
+        $routes->post('store', 'Teacher::store');
+        $routes->get('edit/(:num)', 'Teacher::edit/$1');
+        $routes->post('update/(:num)', 'Teacher::update/$1');
+        $routes->get('delete/(:num)', 'Teacher::delete/$1');
+    });
 });
 
 
