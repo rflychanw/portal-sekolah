@@ -34,8 +34,16 @@
                         class="<?= uri_string() == '' || uri_string() == '/' ? 'active' : '' ?>">Beranda</a></li>
                 <li><a href="<?= base_url('about') ?>" class="<?= uri_string() == 'about' ? 'active' : '' ?>">Tentang
                         Kami</a></li>
-                <li><a href="<?= base_url('academics') ?>"
-                        class="<?= uri_string() == 'academics' ? 'active' : '' ?>">Akademik</a></li>
+                <li class="dropdown">
+                    <a href="<?= base_url('curriculum') ?>"
+                        class="<?= uri_string() == 'curriculum' || uri_string() == 'extracurricular' ? 'active' : '' ?>">
+                        Akademik <i class="fas fa-chevron-down" style="font-size: 0.7rem; margin-left: 0.3rem;"></i>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="<?= base_url('curriculum') ?>">Kurikulum</a></li>
+                        <li><a href="<?= base_url('extracurricular') ?>">Ekstrakurikuler</a></li>
+                    </ul>
+                </li>
                 <li><a href="<?= base_url('news') ?>" class="<?= uri_string() == 'news' ? 'active' : '' ?>">Berita</a>
                 </li>
                 <li><a href="<?= base_url('contact') ?>"
@@ -145,8 +153,20 @@
             }
         });
 
+        // Dropdown toggle for mobile
+        const dropdowns = document.querySelectorAll('.dropdown');
+        dropdowns.forEach(dropdown => {
+            const link = dropdown.querySelector('a');
+            link.addEventListener('click', (e) => {
+                if (window.innerWidth <= 768) {
+                    e.preventDefault();
+                    dropdown.classList.toggle('active');
+                }
+            });
+        });
+
         // Close menu when clicking a link
-        document.querySelectorAll('.nav-links a').forEach(link => {
+        document.querySelectorAll('.nav-links a:not(.dropdown > a)').forEach(link => {
             link.addEventListener('click', () => {
                 navLinks.classList.remove('active');
                 menuBtn.querySelector('i').classList.remove('fa-times');

@@ -353,6 +353,12 @@
                 </a>
             </li>
             <li class="nav-item">
+                <a href="<?= base_url('admin/guru/articles') ?>"
+                    class="nav-link <?= strpos(uri_string(), 'admin/guru/articles') !== false ? 'active' : '' ?>">
+                    <i class="fas fa-newspaper"></i> Artikel Saya
+                </a>
+            </li>
+            <li class="nav-item">
                 <a href="<?= base_url('admin/guru/profile') ?>"
                     class="nav-link <?= uri_string() == 'admin/guru/profile' ? 'active' : '' ?>">
                     <i class="fas fa-user"></i> Profil Saya

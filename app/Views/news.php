@@ -13,123 +13,84 @@
     </div>
 </section>
 
-<!-- Filter/Navigation News -->
-<section class="section" style="padding: 2rem 0; background: white; border-bottom: 1px solid #E2E8F0;">
-    <div class="container" style="display: flex; gap: 2rem; justify-content: center; font-weight: 500;">
-        <a href="#" style="color: var(--primary);">Semua</a>
-        <a href="#" style="color: var(--text-sub);">Akademik</a>
-        <a href="#" style="color: var(--text-sub);">Olahraga</a>
-        <a href="#" style="color: var(--text-sub);">Prestasi</a>
-        <a href="#" style="color: var(--text-sub);">Pengumuman</a>
-    </div>
-</section>
-
 <!-- News Grid Full -->
 <section class="section">
     <div class="container">
-        <div class="news-grid" style="grid-template-columns: repeat(3, 1fr); gap: 3rem;">
-            <!-- Already have 3 cards, let's add some variations -->
-            <div class="news-card">
-                <div class="news-image">
-                    <img src="<?= base_url('images/graduation.png') ?>" alt="News"
-                        style="width: 100%; height: 100%; object-fit: cover;">
-                </div>
-                <div class="news-content">
-                    <div class="news-date">Mei 15, 2024</div>
-                    <h3>Wisuda Angkatan 2024</h3>
-                    <p>Momen haru dan bangga saat 350 siswa merayakan kelulusan mereka...</p>
-                    <a href="#"
-                        style="color: var(--primary); font-weight: 600; margin-top: 1rem; display: inline-block;">Baca
-                        Selengkapnya</a>
-                </div>
+        <?php if (empty($articles)): ?>
+            <div style="text-align: center; padding: 5rem 0;">
+                <i class="fas fa-newspaper" style="font-size: 5rem; color: #E2E8F0; margin-bottom: 2rem;"></i>
+                <h2 style="color: #64748B;">Belum ada berita yang diterbitkan.</h2>
+                <p style="color: #94A3B8;">Silakan kembali lagi nanti untuk update terbaru.</p>
             </div>
-
-            <div class="news-card">
-                <div class="news-image">
-                    <img src="<?= base_url('images/lab.png') ?>" alt="News"
-                        style="width: 100%; height: 100%; object-fit: cover;">
-                </div>
-                <div class="news-content">
-                    <div class="news-date">April 20, 2024</div>
-                    <h3>Peresmian Lab Sains High-Tech</h3>
-                    <p>Memasuki era digital, EduPortal menghadirkan fasilitas sains terbaik...</p>
-                    <a href="#"
-                        style="color: var(--primary); font-weight: 600; margin-top: 1rem; display: inline-block;">Baca
-                        Selengkapnya</a>
-                </div>
+        <?php else: ?>
+            <div class="news-grid" style="grid-template-columns: repeat(3, 1fr); gap: 3rem;">
+                <?php foreach ($articles as $a): ?>
+                    <div class="news-card">
+                        <div class="news-image" style="height: 220px; background: #F1F5F9; overflow: hidden;">
+                            <?php if ($a['image']): ?>
+                                <img src="<?= base_url('uploads/articles/' . $a['image']) ?>" alt="<?= esc($a['title']) ?>"
+                                    style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease;">
+                            <?php else: ?>
+                                <div style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; color: #CBD5E1;">
+                                    <i class="fas fa-image" style="font-size: 3rem;"></i>
+                                </div>
+                            <?php endif; ?>
+                        </div>
+                        <div class="news-content" style="padding: 2rem;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                                <div class="news-date" style="font-size: 0.85rem; color: var(--primary); font-weight: 600;">
+                                    <?= date('d M Y', strtotime($a['created_at'])) ?>
+                                </div>
+                                <div style="font-size: 0.75rem; color: #64748B; background: #F1F5F9; padding: 0.2rem 0.6rem; border-radius: 999px; font-weight: 500;">
+                                    By <?= esc($a['writer'] ?? 'Admin') ?>
+                                </div>
+                            </div>
+                            <h3 style="font-size: 1.25rem; margin-bottom: 1rem; color: #1E293B; line-height: 1.4; height: 2.8em; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;">
+                                <?= esc($a['title']) ?>
+                            </h3>
+                            <p style="color: #64748B; font-size: 0.95rem; line-height: 1.6; margin-bottom: 1.5rem; height: 4.8em; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical;">
+                                <?= esc($a['summary'] ?? (strlen($a['content']) > 100 ? substr(strip_tags($a['content']), 0, 100) . '...' : strip_tags($a['content']))) ?>
+                            </p>
+                            <a href="<?= base_url('news/' . $a['slug']) ?>"
+                                style="color: var(--primary); font-weight: 700; text-decoration: none; display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.9rem;">
+                                Baca Selengkapnya <i class="fas fa-chevron-right" style="font-size: 0.75rem;"></i>
+                            </a>
+                        </div>
+                    </div>
+                <?php endforeach; ?>
             </div>
-
-            <div class="news-card">
-                <div class="news-image">
-                    <img src="<?= base_url('images/hero.png') ?>" alt="News"
-                        style="width: 100%; height: 100%; object-fit: cover;">
-                </div>
-                <div class="news-content">
-                    <div class="news-date">Maret 10, 2024</div>
-                    <h3>Kunjungan Industri ke Silicon Valley</h3>
-                    <p>Meningkatkan wawasan teknologi siswa melalui kunjungan industri mancanegara...</p>
-                    <a href="#"
-                        style="color: var(--primary); font-weight: 600; margin-top: 1rem; display: inline-block;">Baca
-                        Selengkapnya</a>
-                </div>
-            </div>
-
-            <div class="news-card">
-                <div
-                    style="height: 200px; background: #EEF2FF; display: flex; align-items: center; justify-content: center;">
-                    <i class="fas fa-trophy" style="font-size: 3rem; color: var(--accent);"></i>
-                </div>
-                <div class="news-content">
-                    <div class="news-date">Februari 28, 2024</div>
-                    <h3>Juara 1 Olimpiade Matematika Nasional</h3>
-                    <p>Selamat kepada Budi Santoso atas prestasinya mengharumkan nama sekolah...</p>
-                    <a href="#"
-                        style="color: var(--primary); font-weight: 600; margin-top: 1rem; display: inline-block;">Baca
-                        Selengkapnya</a>
-                </div>
-            </div>
-
-            <div class="news-card">
-                <div
-                    style="height: 200px; background: #F0FDF4; display: flex; align-items: center; justify-content: center;">
-                    <i class="fas fa-leaf" style="font-size: 3rem; color: #10B981;"></i>
-                </div>
-                <div class="news-content">
-                    <div class="news-date">Januari 15, 2024</div>
-                    <h3>Gerakan Sekolah Hijau (Go Green)</h3>
-                    <p>Komitmen kami dalam melestarikan lingkungan melalui program daur ulang...</p>
-                    <a href="#"
-                        style="color: var(--primary); font-weight: 600; margin-top: 1rem; display: inline-block;">Baca
-                        Selengkapnya</a>
-                </div>
-            </div>
-
-            <div class="news-card">
-                <div
-                    style="height: 200px; background: #FFF7ED; display: flex; align-items: center; justify-content: center;">
-                    <i class="fas fa-laptop-code" style="font-size: 3rem; color: #F97316;"></i>
-                </div>
-                <div class="news-content">
-                    <div class="news-date">Desember 20, 2023</div>
-                    <h3>Coding Boot Camp Summer 2024</h3>
-                    <p>Segera daftarkan diri dalam pelatihan pemrograman intensif selama liburan...</p>
-                    <a href="#"
-                        style="color: var(--primary); font-weight: 600; margin-top: 1rem; display: inline-block;">Baca
-                        Selengkapnya</a>
-                </div>
-            </div>
-        </div>
-
-        <!-- Pagination Placeholder -->
-        <div style="margin-top: 4rem; text-align: center; display: flex; gap: 1rem; justify-content: center;">
-            <a href="#"
-                style="width: 40px; height: 40px; background: var(--primary); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center;">1</a>
-            <a href="#"
-                style="width: 40px; height: 40px; background: white; color: var(--text-main); border-radius: 50%; border: 1px solid #E2E8F0; display: flex; align-items: center; justify-content: center;">2</a>
-            <a href="#"
-                style="width: 40px; height: 40px; background: white; color: var(--text-main); border-radius: 50%; border: 1px solid #E2E8F0; display: flex; align-items: center; justify-content: center;">3</a>
-        </div>
+        <?php endif; ?>
     </div>
 </section>
+
+<style>
+    .news-card {
+        background: white;
+        border-radius: 1.5rem;
+        overflow: hidden;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        transition: all 0.3s ease;
+        border: 1px solid #F1F5F9;
+    }
+    .news-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        border-color: var(--primary);
+    }
+    .news-card:hover img {
+        transform: scale(1.1);
+    }
+    
+    @media (max-width: 1024px) {
+        .news-grid {
+            grid-template-columns: repeat(2, 1fr) !important;
+        }
+    }
+    @media (max-width: 768px) {
+        .news-grid {
+            grid-template-columns: 1fr !important;
+        }
+    }
+</style>
 
 <?= $this->endSection() ?>

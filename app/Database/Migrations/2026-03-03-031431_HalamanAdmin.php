@@ -113,12 +113,20 @@ class HalamanAdmin extends Migration
                 'constraint' => ['published', 'draft'],
                 'default' => 'draft',
             ],
+            'writer' => [
+                'type' => 'VARCHAR',
+                'constraint' => '50',
+                'null' => true,
+            ],
             'created_at datetime default current_timestamp',
             'updated_at datetime default current_timestamp on update current_timestamp',
         ]);
         $this->forge->addKey('id', true);
         $this->forge->createTable('articles', true);
+
+        
     }
+
 
     public function down()
     {

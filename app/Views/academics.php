@@ -17,7 +17,7 @@
 </section>
 
 <!-- Curriculum Section -->
-<section class="section">
+<section id="curriculum" class="section">
     <div class="container">
         <div class="hero-grid">
             <div class="hero-image" style="box-shadow: none; border-radius: 2rem; overflow: hidden;">
@@ -58,7 +58,7 @@
 </section>
 
 <!-- Extracurricular -->
-<section class="section" style="background: #F8FAFC;">
+<section id="extracurricular" class="section" style="background: #F8FAFC;">
     <div class="container">
         <div class="section-title">
             <h2>Ekstrakurikuler</h2>

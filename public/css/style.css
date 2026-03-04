@@ -117,6 +117,72 @@ nav .container {
     width: 100%;
 }
 
+/* Dropdown */
+.dropdown {
+    position: relative;
+}
+
+.dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%) translateY(10px);
+    background: white;
+    min-width: 200px;
+    border-radius: 1rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    padding: 0.5rem;
+    opacity: 0;
+    visibility: hidden;
+    transition: var(--transition);
+    border: 1px solid #F1F5F9;
+}
+
+.dropdown:hover .dropdown-menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
+}
+
+.dropdown-menu li {
+    width: 100%;
+}
+
+.dropdown-menu a {
+    display: block;
+    padding: 0.8rem 1.2rem;
+    border-radius: 0.75rem;
+    font-size: 0.95rem;
+    font-weight: 500;
+}
+
+.dropdown-menu a:hover {
+    background: #EFF6FF;
+    color: var(--primary) !important;
+}
+
+.dropdown-menu a::after {
+    display: none;
+}
+
+@media (max-width: 768px) {
+    .dropdown-menu {
+        position: static;
+        transform: none;
+        opacity: 1;
+        visibility: visible;
+        box-shadow: none;
+        background: transparent;
+        padding-left: 1.5rem;
+        display: none;
+        border: none;
+    }
+
+    .dropdown.active .dropdown-menu {
+        display: block;
+    }
+}
+
 
 /* Burger Menu Button */
 .menu-btn {

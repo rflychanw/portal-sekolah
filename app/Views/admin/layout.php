@@ -240,8 +240,8 @@
             </li>
 
             <li class="nav-item">
-
-                <a href="#" class="nav-link <?= uri_string() == 'admin/news' ? 'active' : '' ?>">
+                <a href="<?= base_url('admin/articles') ?>"
+                    class="nav-link <?= strpos(uri_string(), 'admin/articles') !== false ? 'active' : '' ?>">
                     <i class="fas fa-newspaper"></i> Manajemen Berita
                 </a>
             </li>

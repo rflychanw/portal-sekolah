@@ -8,7 +8,10 @@ use CodeIgniter\Router\RouteCollection;
 $routes->get('/', 'Home::index');
 $routes->get('about', 'Home::about');
 $routes->get('academics', 'Home::academics');
+$routes->get('curriculum', 'Home::curriculum');
+$routes->get('extracurricular', 'Home::extracurricular');
 $routes->get('news', 'Home::news');
+$routes->get('news/(:segment)', 'Home::newsDetail/$1');
 $routes->get('contact', 'Home::contact');
 $routes->get('register', 'Home::register');
 
@@ -37,10 +40,30 @@ $routes->group('admin', function ($routes) {
         $routes->get('delete/(:num)', 'Teacher::delete/$1');
     });
 
+    // Article Management (Admin)
+    $routes->group('articles', function ($routes) {
+        $routes->get('/', 'Admin\Article::index');
+        $routes->get('create', 'Admin\Article::create');
+        $routes->post('store', 'Admin\Article::store');
+        $routes->get('edit/(:num)', 'Admin\Article::edit/$1');
+        $routes->post('update/(:num)', 'Admin\Article::update/$1');
+        $routes->get('delete/(:num)', 'Admin\Article::delete/$1');
+    });
+
     // Guru Pages (inside admin)
     $routes->group('guru', function ($routes) {
         $routes->get('dashboard', 'Guru::dashboard');
         $routes->get('profile', 'Guru::profile');
         $routes->get('logout', 'Auth::logout');
+
+        // Article Management (Guru)
+        $routes->group('articles', function ($routes) {
+            $routes->get('/', 'Guru\Article::index');
+            $routes->get('create', 'Guru\Article::create');
+            $routes->post('store', 'Guru\Article::store');
+            $routes->get('edit/(:num)', 'Guru\Article::edit/$1');
+            $routes->post('update/(:num)', 'Guru\Article::update/$1');
+            $routes->get('delete/(:num)', 'Guru\Article::delete/$1');
+        });
     });
 });

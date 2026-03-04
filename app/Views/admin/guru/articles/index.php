@@ -219,146 +219,6 @@
         .menu-toggle-guru {
             display: none;
         }
-
-        /* Cards */
-        .welcome-card {
-            background: linear-gradient(135deg, #059669, #10B981);
-            border-radius: 2rem;
-            padding: 3rem;
-            color: white;
-            margin-bottom: 2.5rem;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .welcome-card::after {
-            content: '';
-            position: absolute;
-            right: -30px;
-            top: -30px;
-            width: 200px;
-            height: 200px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 50%;
-        }
-
-        .welcome-card::before {
-            content: '';
-            position: absolute;
-            right: 60px;
-            bottom: -40px;
-            width: 150px;
-            height: 150px;
-            background: rgba(255, 255, 255, 0.08);
-            border-radius: 50%;
-        }
-
-        .welcome-card h2 {
-            font-size: 1.8rem;
-            font-weight: 800;
-            margin-bottom: 0.5rem;
-        }
-
-        .welcome-card p {
-            font-size: 1.05rem;
-            opacity: 0.9;
-        }
-
-        .info-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 2rem;
-            margin-bottom: 2.5rem;
-        }
-
-        @media (max-width: 900px) {
-            .info-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        .info-card {
-            background: white;
-            padding: 2rem;
-            border-radius: 1.5rem;
-            border: 1px solid var(--border);
-            transition: var(--transition);
-        }
-
-        .info-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.05);
-            border-color: var(--primary);
-        }
-
-        .info-card .icon {
-            width: 50px;
-            height: 50px;
-            background: var(--primary-light);
-            border-radius: 14px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.25rem;
-            color: var(--primary);
-            margin-bottom: 1.25rem;
-        }
-
-        .info-card h3 {
-            font-size: 1rem;
-            color: var(--text-sub);
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-        }
-
-        .info-card p {
-            font-size: 1.25rem;
-            font-weight: 700;
-        }
-
-        .quick-actions {
-            background: white;
-            border-radius: 1.5rem;
-            padding: 2.5rem;
-            border: 1px solid var(--border);
-        }
-
-        .quick-actions h2 {
-            font-size: 1.3rem;
-            font-weight: 700;
-            margin-bottom: 1.5rem;
-        }
-
-        .action-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 1rem;
-        }
-
-        .action-btn {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            padding: 1.25rem;
-            background: var(--bg-light);
-            border-radius: 1rem;
-            text-decoration: none;
-            color: var(--text-main);
-            font-weight: 600;
-            transition: var(--transition);
-            border: 1px solid transparent;
-        }
-
-        .action-btn:hover {
-            border-color: var(--primary);
-            background: var(--primary-light);
-            transform: translateY(-2px);
-        }
-
-        .action-btn i {
-            font-size: 1.25rem;
-            color: var(--primary);
-        }
     </style>
 </head>
 
@@ -430,53 +290,100 @@
         </header>
 
         <main>
-            <!-- Welcome Card -->
-            <div class="welcome-card">
-                <h2>Selamat Datang,
-                    <?= esc($teacher_name ?? 'Guru') ?>! 👋
-                </h2>
-                <p>Semoga hari Anda penuh semangat dan inspirasi untuk mengajar.</p>
+            <div class="header-actions"
+                style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                <div>
+                    <h2 style="font-weight: 700; font-size: 1.5rem;">Daftar Artikel</h2>
+                    <p style="color: #64748B; font-size: 0.9rem;">Kelola tulisan dan publikasi Anda</p>
+                </div>
+                <a href="<?= base_url('admin/guru/articles/create') ?>" class="btn btn-primary"
+                    style="background: var(--primary); color: white; padding: 0.75rem 1.5rem; border-radius: 12px; font-weight: 600; text-decoration: none; display: inline-flex; align-items: center; gap: 0.5rem;">
+                    <i class="fas fa-plus"></i> Tulis Artikel
+                </a>
             </div>
 
-            <!-- Info Cards -->
-            <div class="info-grid">
-                <div class="info-card">
-                    <div class="icon"><i class="fas fa-id-card"></i></div>
-                    <h3>NIP</h3>
-                    <p>
-                        <?= esc($teacher_nip ?? '-') ?>
-                    </p>
+            <?php if (session()->getFlashdata('success')): ?>
+                <div
+                    style="background: #DCFCE7; color: #166534; padding: 1rem; border-radius: 12px; border: 1px solid #BBF7D0; margin-bottom: 1.5rem;">
+                    <?= session()->getFlashdata('success') ?>
                 </div>
-                <div class="info-card">
-                    <div class="icon"><i class="fas fa-book"></i></div>
-                    <h3>Mata Pelajaran</h3>
-                    <p>
-                        <?= esc($teacher_subject ?? '-') ?>
-                    </p>
-                </div>
-                <div class="info-card">
-                    <div class="icon"><i class="fas fa-clock"></i></div>
-                    <h3>Status</h3>
-                    <p style="color: #059669;">● Aktif</p>
-                </div>
-            </div>
+            <?php endif; ?>
 
-            <!-- Quick Actions -->
-            <div class="quick-actions">
-                <h2><i class="fas fa-bolt" style="color: var(--primary); margin-right: 0.5rem;"></i> Aksi Cepat</h2>
-                <div class="action-grid">
-                    <a href="<?= base_url('admin/guru/articles/create') ?>" class="action-btn">
-                        <i class="fas fa-edit"></i>
-                        <span>Tulis Artikel</span>
-                    </a>
-                    <a href="<?= base_url('admin/guru/profile') ?>" class="action-btn">
-                        <i class="fas fa-user-edit"></i>
-                        <span>Lihat Profil</span>
-                    </a>
-                    <a href="<?= base_url('admin/guru/logout') ?>" class="action-btn">
-                        <i class="fas fa-sign-out-alt"></i>
-                        <span>Keluar</span>
-                    </a>
+            <div class="card"
+                style="background: white; border-radius: 16px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); padding: 1.5rem;">
+                <div style="overflow-x: auto;">
+                    <table style="width: 100%; border-collapse: collapse;">
+                        <thead>
+                            <tr>
+                                <th
+                                    style="text-align: left; padding: 1rem; color: #64748B; font-weight: 600; border-bottom: 1px solid #E2E8F0;">
+                                    Gambar</th>
+                                <th
+                                    style="text-align: left; padding: 1rem; color: #64748B; font-weight: 600; border-bottom: 1px solid #E2E8F0;">
+                                    Judul</th>
+                                <th
+                                    style="text-align: left; padding: 1rem; color: #64748B; font-weight: 600; border-bottom: 1px solid #E2E8F0;">
+                                    Status</th>
+                                <th
+                                    style="text-align: left; padding: 1rem; color: #64748B; font-weight: 600; border-bottom: 1px solid #E2E8F0;">
+                                    Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php if (empty($articles)): ?>
+                                <tr>
+                                    <td colspan="4" style="text-align: center; color: #64748B; padding: 3rem;">Anda belum
+                                        menulis artikel apapun.</td>
+                                </tr>
+                            <?php else: ?>
+                                <?php foreach ($articles as $a): ?>
+                                    <tr>
+                                        <td style="padding: 1rem; border-bottom: 1px solid #F1F5F9;">
+                                            <?php if ($a['image']): ?>
+                                                <img src="<?= base_url('uploads/articles/' . $a['image']) ?>" alt="Article"
+                                                    style="width: 80px; height: 50px; border-radius: 8px; object-fit: cover;">
+                                            <?php else: ?>
+                                                <div
+                                                    style="width: 80px; height: 50px; background: #F1F5F9; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #94A3B8;">
+                                                    <i class="fas fa-image"></i>
+                                                </div>
+                                            <?php endif; ?>
+                                        </td>
+                                        <td style="padding: 1rem; border-bottom: 1px solid #F1F5F9;">
+                                            <div style="font-weight: 600; color: #1E293B;">
+                                                <?= esc($a['title']) ?>
+                                            </div>
+                                            <div style="font-size: 0.8rem; color: #64748B;">
+                                                <?= date('d M Y', strtotime($a['created_at'])) ?>
+                                            </div>
+                                        </td>
+                                        <td style="padding: 1rem; border-bottom: 1px solid #F1F5F9;">
+                                            <?php if ($a['status'] === 'published'): ?>
+                                                <span
+                                                    style="background: #DCFCE7; color: #166534; padding: 0.25rem 0.75rem; border-radius: 9999px; font-size: 0.75rem; font-weight: 600;">Published</span>
+                                            <?php else: ?>
+                                                <span
+                                                    style="background: #F1F5F9; color: #64748B; padding: 0.25rem 0.75rem; border-radius: 9999px; font-size: 0.75rem; font-weight: 600;">Draft</span>
+                                            <?php endif; ?>
+                                        </td>
+                                        <td style="padding: 1rem; border-bottom: 1px solid #F1F5F9;">
+                                            <div style="display: flex; gap: 0.5rem;">
+                                                <a href="<?= base_url('admin/guru/articles/edit/' . $a['id']) ?>"
+                                                    style="color: #F59E0B; background: #FEF3C7; width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; text-decoration: none;">
+                                                    <i class="fas fa-edit"></i>
+                                                </a>
+                                                <a href="<?= base_url('admin/guru/articles/delete/' . $a['id']) ?>"
+                                                    onclick="return confirm('Hapus artikel ini?')"
+                                                    style="color: #EF4444; background: #FEE2E2; width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; text-decoration: none;">
+                                                    <i class="fas fa-trash"></i>
+                                                </a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            <?php endif; ?>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </main>
