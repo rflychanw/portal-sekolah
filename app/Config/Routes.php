@@ -12,8 +12,10 @@ $routes->get('curriculum', 'Home::curriculum');
 $routes->get('extracurricular', 'Home::extracurricular');
 $routes->get('news', 'Home::news');
 $routes->get('news/(:segment)', 'Home::newsDetail/$1');
-$routes->get('contact', 'Home::contact');
-$routes->get('register', 'Home::register');
+$routes->get('contact', 'Contact::index');
+$routes->post('contact/submit', 'Contact::submit');
+$routes->get('register', 'Registration::index');
+$routes->post('register/submit', 'Registration::submit');
 
 
 
@@ -65,5 +67,22 @@ $routes->group('admin', function ($routes) {
             $routes->post('update/(:num)', 'Guru\Article::update/$1');
             $routes->get('delete/(:num)', 'Guru\Article::delete/$1');
         });
+    });
+
+    // Registration Management
+    $routes->group('pendaftaran', function ($routes) {
+        $routes->get('/', 'Admin\Pendaftaran::index');
+        $routes->get('show/(:num)', 'Admin\Pendaftaran::show/$1');
+        $routes->post('update-status/(:num)', 'Admin\Pendaftaran::updateStatus/$1');
+        $routes->get('delete/(:num)', 'Admin\Pendaftaran::delete/$1');
+        $routes->get('settings', 'Admin\Pendaftaran::settings');
+        $routes->post('settings/update', 'Admin\Pendaftaran::updateSettings');
+    });
+
+    // Message Management
+    $routes->group('messages', function ($routes) {
+        $routes->get('/', 'Admin\Message::index');
+        $routes->get('show/(:num)', 'Admin\Message::show/$1');
+        $routes->get('delete/(:num)', 'Admin\Message::delete/$1');
     });
 });

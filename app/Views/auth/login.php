@@ -409,7 +409,7 @@
         </form>
 
         <div class="footer">
-            &copy; 2024 EduPortal Sekolah. All rights reserved.
+            &copy; 2024 EduPortal Sekolah. Hak cipta dilindungi undang-undang.
         </div>
     </div>
 

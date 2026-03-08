@@ -124,9 +124,24 @@
     <div class="container register-grid">
         <!-- Info Side -->
         <div class="register-info">
-            <h1>Bergabunglah dengan EduPortal</h1>
-            <p>Mulai perjalanan pendidikan terbaik Anda bersama kami. Proses pendaftaran cepat, transparan, dan
-                terintegrasi.</p>
+            <h1>
+                <?= $settings['title'] ?? 'Bergabunglah dengan EduPortal' ?>
+            </h1>
+            <p>
+                <?= $settings['description'] ?? 'Mulai perjalanan pendidikan terbaik Anda bersama kami. Proses pendaftaran cepat, transparan, dan terintegrasi.' ?>
+            </p>
+
+            <?php if (isset($settings['deadline']) && $settings['deadline']): ?>
+                <div class="benefit-item">
+                    <div class="benefit-icon"><i class="fas fa-calendar-alt"></i></div>
+                    <div>
+                        <h4 style="margin-bottom: 0.4rem;">Batas Pendaftaran</h4>
+                        <p style="font-size: 0.9rem; color: var(--text-sub);">Silahkan daftar sebelum tanggal
+                            <?= date('d F Y', strtotime($settings['deadline'])) ?>
+                        </p>
+                    </div>
+                </div>
+            <?php endif; ?>
 
             <div class="benefit-item">
                 <div class="benefit-icon"><i class="fas fa-file-invoice"></i></div>
@@ -158,76 +173,116 @@
 
         <!-- Form Side -->
         <div class="register-form-card">
-            <h2 style="margin-bottom: 3rem; font-size: 2rem;">Formulir Pendaftaran Siswa Baru</h2>
-            <form action="#" method="POST">
-
-                <div class="input-field">
-                    <label>Nama Lengkap Calon Siswa</label>
-                    <input type="text" placeholder="Contoh: Budi Santoso" required>
+            <?php if (!$settings['is_open']): ?>
+                <div style="text-align: center; padding: 2rem;">
+                    <i class="fas fa-lock" style="font-size: 4rem; color: #cbd5e1; margin-bottom: 2rem;"></i>
+                    <h2 style="margin-bottom: 1rem;">Pendaftaran Ditutup</h2>
+                    <p style="color: var(--text-sub);">Mohon maaf, saat ini pendaftaran belum dibuka atau sudah berakhir.
+                        Silakan kembali lagi nanti.</p>
+                    <a href="/" class="btn-cta"
+                        style="display: inline-block; margin-top: 2rem; text-decoration: none;">Kembali ke Beranda</a>
                 </div>
+            <?php else: ?>
+                <h2 style="margin-bottom: 3rem; font-size: 2rem;">Formulir Pendaftaran Siswa Baru</h2>
 
-                <div class="form-row">
-                    <div class="input-field">
-                        <label>Tempat Lahir</label>
-                        <input type="text" placeholder="Kota Kelahiran" required>
+                <?php if (session()->getFlashdata('success')): ?>
+                    <div
+                        style="background: #D1FAE5; color: #065F46; padding: 1rem; border-radius: 0.5rem; margin-bottom: 2rem;">
+                        <?= session()->getFlashdata('success') ?>
                     </div>
-                    <div class="input-field">
-                        <label>Tanggal Lahir</label>
-                        <input type="date" required>
-                    </div>
-                </div>
+                <?php endif; ?>
 
-                <div class="form-row">
-                    <div class="input-field">
-                        <label>Jenis Kelamin</label>
-                        <select required>
-                            <option value="">Pilih...</option>
-                            <option value="L">Laki-laki</option>
-                            <option value="P">Perempuan</option>
-                        </select>
+                <?php if (session()->getFlashdata('errors')): ?>
+                    <div
+                        style="background: #FEE2E2; color: #991B1B; padding: 1rem; border-radius: 0.5rem; margin-bottom: 2rem;">
+                        <ul style="margin: 0; padding-left: 1rem;">
+                            <?php foreach (session()->getFlashdata('errors') as $error): ?>
+                                <li>
+                                    <?= $error ?>
+                                </li>
+                            <?php endforeach; ?>
+                        </ul>
                     </div>
+                <?php endif; ?>
+
+                <form action="<?= base_url('register/submit') ?>" method="POST">
+                    <?= csrf_field() ?>
+
                     <div class="input-field">
-                        <label>Jenjang yang Dituju</label>
-                        <select required>
-                            <option value="">Pilih Jenjang...</option>
-                            <option value="SMP">SMP / Middle School</option>
-                            <option value="SMA-IPA">SMA IPA / High School Science</option>
-                            <option value="SMA-IPS">SMA IPS / High School Social</option>
-                        </select>
+                        <label>Nama Lengkap Calon Siswa</label>
+                        <input type="text" name="nama_lengkap" placeholder="Contoh: Budi Santoso"
+                            value="<?= old('nama_lengkap') ?>" required>
                     </div>
-                </div>
 
-                <div class="input-field">
-                    <label>Nama Orang Tua / Wali</label>
-                    <input type="text" placeholder="Nama ayah/ibu" required>
-                </div>
+                    <div class="form-row">
+                        <div class="input-field">
+                            <label>Tempat Lahir</label>
+                            <input type="text" name="tempat_lahir" placeholder="Kota Kelahiran"
+                                value="<?= old('tempat_lahir') ?>" required>
+                        </div>
+                        <div class="input-field">
+                            <label>Tanggal Lahir</label>
+                            <input type="date" name="tanggal_lahir" value="<?= old('tanggal_lahir') ?>" required>
+                        </div>
+                    </div>
 
-                <div class="form-row">
+                    <div class="form-row">
+                        <div class="input-field">
+                            <label>Jenis Kelamin</label>
+                            <select name="jenis_kelamin" required>
+                                <option value="">Pilih...</option>
+                                <option value="L" <?= old('jenis_kelamin') == 'L' ? 'selected' : '' ?>>Laki-laki</option>
+                                <option value="P" <?= old('jenis_kelamin') == 'P' ? 'selected' : '' ?>>Perempuan</option>
+                            </select>
+                        </div>
+                        <div class="input-field">
+                            <label>Jenjang yang Dituju</label>
+                            <select name="jenjang" required>
+                                <option value="">Pilih Jenjang...</option>
+                                <option value="SMP" <?= old('jenjang') == 'SMP' ? 'selected' : '' ?>>SMP</option>
+                                <option value="SMA-IPA" <?= old('jenjang') == 'SMA-IPA' ? 'selected' : '' ?>>SMA IPA</option>
+                                <option value="SMA-IPS" <?= old('jenjang') == 'SMA-IPS' ? 'selected' : '' ?>>SMA IPS</option>
+                            </select>
+                        </div>
+                    </div>
+
                     <div class="input-field">
-                        <label>Nomor WhatsApp</label>
-                        <input type="tel" placeholder="0812xxxx" required>
+                        <label>Nama Orang Tua / Wali</label>
+                        <input type="text" name="nama_wali" placeholder="Nama ayah/ibu" value="<?= old('nama_wali') ?>"
+                            required>
                     </div>
+
+                    <div class="form-row">
+                        <div class="input-field">
+                            <label>Nomor WhatsApp</label>
+                            <input type="tel" name="no_wa" placeholder="0812xxxx" value="<?= old('no_wa') ?>" required>
+                        </div>
+                        <div class="input-field">
+                            <label>Alamat Email</label>
+                            <input type="email" name="email" placeholder="email@contoh.com" value="<?= old('email') ?>"
+                                required>
+                        </div>
+                    </div>
+
                     <div class="input-field">
-                        <label>Alamat Email</label>
-                        <input type="email" placeholder="email@contoh.com" required>
+                        <label>Alamat Rumah Lengkap</label>
+                        <textarea name="alamat" rows="3" placeholder="Masukkan alamat lengkap"
+                            required><?= old('alamat') ?></textarea>
                     </div>
-                </div>
 
-                <div class="input-field">
-                    <label>Alamat Rumah Lengkap</label>
-                    <textarea rows="3" placeholder="Masukkan alamat lengkap" required></textarea>
-                </div>
-
-                <button type="submit" class="btn-cta"
-                    style="width: 100%; border: none; padding: 1.3rem; font-size: 1.1rem; cursor: pointer; margin-top: 1rem;">
-                    Kirim Pendaftaran Sekarang
-                </button>
-            </form>
-            <p style="text-align: center; margin-top: 2rem; font-size: 0.85rem; color: var(--text-sub);">
-                Dengan mengeklik tombol, Anda menyetujui kebijakan privasi dan ketentuan EduPortal.
-            </p>
+                    <button type="submit" class="btn-cta"
+                        style="width: 100%; border: none; padding: 1.3rem; font-size: 1.1rem; cursor: pointer; margin-top: 1rem;">
+                        Kirim Pendaftaran Sekarang
+                    </button>
+                </form>
+                <p style="text-align: center; margin-top: 2rem; font-size: 0.85rem; color: var(--text-sub);">
+                    Dengan mengeklik tombol, Anda menyetujui kebijakan privasi dan ketentuan EduPortal.
+                </p>
+            <?php endif; ?>
         </div>
     </div>
+</div>
+</div>
 </div>
 
 <?= $this->endSection() ?>

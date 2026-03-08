@@ -12,6 +12,7 @@ class Admin extends Controller
         if (session()->get('role') === 'guru') {
             return redirect()->to('/admin/guru/dashboard');
         }
+        $articleModel = new \App\Models\ArticleModel();
         $teacherModel = new \App\Models\TeacherModel();
 
         $data = [
@@ -19,9 +20,11 @@ class Admin extends Controller
             'stats' => [
                 'students' => 1500,
                 'teachers' => $teacherModel->countAll(),
-                'news' => 45,
-                'messages' => 12
-            ]
+                'news' => $articleModel->countAll(),
+                'registrations' => (new \App\Models\PendaftaranModel())->countAll(),
+                'messages' => (new \App\Models\MessageModel())->countAll()
+            ],
+            'latest_articles' => $articleModel->orderBy('created_at', 'DESC')->limit(5)->find()
         ];
         return view('admin/dashboard', $data);
     }

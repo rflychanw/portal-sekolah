@@ -163,12 +163,21 @@
         </div>
     </div>
     <div class="admin-card">
+        <div class="card-icon"><i class="fas fa-file-signature"></i></div>
+        <div class="card-info">
+            <h3>
+                <?= $stats['registrations'] ?>
+            </h3>
+            <p>Pendaftaran</p>
+        </div>
+    </div>
+    <div class="admin-card">
         <div class="card-icon"><i class="fas fa-envelope"></i></div>
         <div class="card-info">
             <h3>
                 <?= $stats['messages'] ?>
             </h3>
-            <p>Pesan Baru</p>
+            <p>Pesan Masuk</p>
         </div>
     </div>
 </div>
@@ -190,30 +199,38 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>Wisuda Angkatan 2024</td>
-                    <td><span class="status-badge status-published">Published</span></td>
-                    <td>15 Mei 2024</td>
-                    <td><a href="#" style="color: var(--primary);"><i class="fas fa-edit"></i></a></td>
-                </tr>
-                <tr>
-                    <td>Peresmian Lab Sains High-Tech</td>
-                    <td><span class="status-badge status-published">Published</span></td>
-                    <td>20 April 2024</td>
-                    <td><a href="#" style="color: var(--primary);"><i class="fas fa-edit"></i></a></td>
-                </tr>
-                <tr>
-                    <td>Sesi Konseling Karir: Memilih Jurusan</td>
-                    <td><span class="status-badge status-draft">Draft</span></td>
-                    <td>10 Maret 2024</td>
-                    <td><a href="#" style="color: var(--primary);"><i class="fas fa-edit"></i></a></td>
-                </tr>
-                <tr>
-                    <td>Pengumuman Libur Hari Raya</td>
-                    <td><span class="status-badge status-published">Published</span></td>
-                    <td>01 Maret 2024</td>
-                    <td><a href="#" style="color: var(--primary);"><i class="fas fa-edit"></i></a></td>
-                </tr>
+                <?php foreach ($latest_articles as $article): ?>
+                    <tr>
+                        <td>
+                            <?= esc($article['title']) ?>
+                        </td>
+                        <td>
+                            <span
+                                class="status-badge <?= $article['status'] === 'Published' ? 'status-published' : 'status-draft' ?>">
+                                <?= $article['status'] ?>
+                            </span>
+                        </td>
+                        <td>
+                            <?= date('d M Y', strtotime($article['created_at'])) ?>
+                        </td>
+                        <td style="display: flex; gap: 1rem; align-items: center;">
+                            <a href="<?= base_url('admin/articles/edit/' . $article['id']) ?>" style="color: #F59E0B;">
+                                <i class="fas fa-edit"></i>
+                            </a>
+                            <a href="<?= base_url('admin/articles/delete/' . $article['id']) ?>" style="color: #EF4444;"
+                                onclick="return confirm('Apakah Anda yakin ingin menghapus artikel ini?')">
+                                <i class="fas fa-trash"></i>
+                            </a>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+                <?php if (empty($latest_articles)): ?>
+                    <tr>
+                        <td colspan="4" style="text-align: center; padding: 2rem; color: var(--text-sub);">
+                            Belum ada artikel yang diterbitkan.
+                        </td>
+                    </tr>
+                <?php endif; ?>
             </tbody>
         </table>
     </div>

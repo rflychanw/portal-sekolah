@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>
-        <?= $title ?? 'Portal Sekolah' ?> | Minimalist & Elegant
+        <?= $title ?? 'Portal Sekolah' ?> | Minimalis & Elegan
     </title>
     <meta name="description"
         content="<?= $description ?? 'Portal Sekolah Minimalis dan Elegan untuk masa depan cerah' ?>">
@@ -23,8 +23,7 @@
     <nav id="navbar">
         <div class="container">
             <a href="<?= base_url() ?>" class="logo">
-                <i class="fas fa-graduation-cap"></i>
-                <span>EduPortal</span>
+                <img src="<?= base_url('images/ruangsekolah.png') ?>" alt="Ruang Sekolah" style="width: 200px;">
             </a>
             <div class="menu-btn" id="menuBtn">
                 <i class="fas fa-bars"></i>
@@ -61,7 +60,7 @@
         <div class="container">
             <div class="footer-grid">
                 <div class="footer-info">
-                    <div class="footer-logo">EduPortal</div>
+                    <div class="footer-logo"><img src="<?= base_url('images/ruangsekolah.png') ?>" alt="Logo" style="height: 40px;"></div>
                     <p style="color: #94A3B8; margin-bottom: 2rem;">Membentuk generasi emas dengan pendidikan
                         berkualitas, teknologi modern, dan karakter yang kuat.</p>
                     <div class="social-links" style="display: flex; gap: 1rem;">
@@ -98,12 +97,12 @@
                         <li style="color: #94A3B8;"><i class="fas fa-phone"
                                 style="margin-right: 0.5rem; color: var(--primary);"></i> (021) 1234-5678</li>
                         <li style="color: #94A3B8;"><i class="fas fa-envelope"
-                                style="margin-right: 0.5rem; color: var(--primary);"></i> info@eduportal.sch.id</li>
+                                style="margin-right: 0.5rem; color: var(--primary);"></i> info@ruangsekolah.sch.id</li>
                     </ul>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2024 EduPortal Sekolah. All rights reserved.</p>
+                <p>&copy; 2024 Ruang Sekolah. Hak cipta dilindungi undang-undang.</p>
             </div>
         </div>
     </footer>

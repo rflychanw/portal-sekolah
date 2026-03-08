@@ -21,48 +21,71 @@
             <div
                 style="background: white; border-radius: 2rem; padding: 4rem; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.05); border: 1px solid #F1F5F9;">
                 <h2 style="margin-bottom: 3rem;">Kirim Pesan</h2>
-                <form action="#" method="post">
+
+                <?php if (session()->getFlashdata('success')): ?>
+                    <div
+                        style="background: #D1FAE5; color: #065F46; padding: 1rem; border-radius: 0.8rem; margin-bottom: 2rem;">
+                        <?= session()->getFlashdata('success') ?>
+                    </div>
+                <?php endif; ?>
+
+                <?php if (session()->getFlashdata('errors')): ?>
+                    <div
+                        style="background: #FEE2E2; color: #991B1B; padding: 1rem; border-radius: 0.8rem; margin-bottom: 2rem;">
+                        <ul style="margin: 0; padding-left: 1rem;">
+                            <?php foreach (session()->getFlashdata('errors') as $error): ?>
+                                <li><?= $error ?></li>
+                            <?php endforeach; ?>
+                        </ul>
+                    </div>
+                <?php endif; ?>
+
+                <form action="<?= base_url('contact/submit') ?>" method="post">
+                    <?= csrf_field() ?>
                     <div style="margin-bottom: 2rem;">
                         <label
                             style="display: block; font-weight: 500; margin-bottom: 0.5rem; color: var(--text-sub);">Nama
                             Lengkap</label>
-                        <input type="text" placeholder="Masukkan nama Anda"
+                        <input type="text" name="name" placeholder="Masukkan nama Anda" value="<?= old('name') ?>"
                             style="width: 100%; border: 1px solid #E2E8F0; padding: 1rem 1.5rem; border-radius: 0.8rem; background: #F8FAFC; font-size: 1rem; color: var(--text-main); transition: var(--transition);"
                             onfocus="this.style.borderColor='var(--primary)'; this.style.outline='none'"
-                            onblur="this.style.borderColor='#E2E8F0'">
+                            onblur="this.style.borderColor='#E2E8F0'" required>
                     </div>
                     <div style="margin-bottom: 2rem;">
                         <label
                             style="display: block; font-weight: 500; margin-bottom: 0.5rem; color: var(--text-sub);">Alamat
                             Email</label>
-                        <input type="email" placeholder="contoh@email.com"
+                        <input type="email" name="email" placeholder="contoh@email.com" value="<?= old('email') ?>"
                             style="width: 100%; border: 1px solid #E2E8F0; padding: 1rem 1.5rem; border-radius: 0.8rem; background: #F8FAFC; font-size: 1rem; color: var(--text-main); transition: var(--transition);"
                             onfocus="this.style.borderColor='var(--primary)'; this.style.outline='none'"
-                            onblur="this.style.borderColor='#E2E8F0'">
+                            onblur="this.style.borderColor='#E2E8F0'" required>
                     </div>
                     <div style="margin-bottom: 2rem;">
                         <label
                             style="display: block; font-weight: 500; margin-bottom: 0.5rem; color: var(--text-sub);">Subjek</label>
-                        <select
+                        <select name="subject"
                             style="width: 100%; border: 1px solid #E2E8F0; padding: 1rem 1.5rem; border-radius: 0.8rem; background: #F8FAFC; font-size: 1rem; color: var(--text-main); transition: var(--transition);"
                             onfocus="this.style.borderColor='var(--primary)'; this.style.outline='none'"
-                            onblur="this.style.borderColor='#E2E8F0'">
-                            <option value="pendaftaran">Pendaftaran Baru</option>
-                            <option value="pertanyaan">Informasi Umum</option>
-                            <option value="kerjasama">Kemitraan & Kerjasama</option>
-                            <option value="lainnya">Lainnya</option>
+                            onblur="this.style.borderColor='#E2E8F0'" required>
+                            <option value="pendaftaran" <?= old('subject') == 'pendaftaran' ? 'selected' : '' ?>>
+                                Pendaftaran Baru</option>
+                            <option value="pertanyaan" <?= old('subject') == 'pertanyaan' ? 'selected' : '' ?>>Informasi
+                                Umum</option>
+                            <option value="kerjasama" <?= old('subject') == 'kerjasama' ? 'selected' : '' ?>>Kemitraan &
+                                Kerjasama</option>
+                            <option value="lainnya" <?= old('subject') == 'lainnya' ? 'selected' : '' ?>>Lainnya</option>
                         </select>
                     </div>
                     <div style="margin-bottom: 3rem;">
                         <label
                             style="display: block; font-weight: 500; margin-bottom: 0.5rem; color: var(--text-sub);">Pesan
                             Anda</label>
-                        <textarea placeholder="Bagaimana kami bisa membantu?"
+                        <textarea name="message" placeholder="Bagaimana kami bisa membantu?"
                             style="width: 100%; border: 1px solid #E2E8F0; padding: 1rem 1.5rem; border-radius: 0.8rem; background: #F8FAFC; font-size: 1rem; color: var(--text-main); transition: var(--transition); min-height: 150px; resize: vertical;"
                             onfocus="this.style.borderColor='var(--primary)'; this.style.outline='none'"
-                            onblur="this.style.borderColor='#E2E8F0'"></textarea>
+                            onblur="this.style.borderColor='#E2E8F0'" required><?= old('message') ?></textarea>
                     </div>
-                    <button type="button" class="btn-cta" style="width: 100%; border: none; cursor: pointer;">Kirim
+                    <button type="submit" class="btn-cta" style="width: 100%; border: none; cursor: pointer;">Kirim
                         Pesan Sekarang</button>
                 </form>
             </div>

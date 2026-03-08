@@ -63,10 +63,7 @@ class Home extends BaseController
         return view('contact');
     }
 
-    public function register(): string
-    {
-        return view('register');
-    }
+
 }
 
 

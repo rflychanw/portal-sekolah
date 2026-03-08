@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>
-        <?= $title ?? 'Dashboard' ?> | EduPortal Admin
+        <?= $title ?? 'Beranda' ?> | Admin Ruang Sekolah
     </title>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap"
         rel="stylesheet">
@@ -49,6 +49,25 @@
             padding: 2rem 1.5rem;
             display: flex;
             flex-direction: column;
+            overflow-y: auto;
+        }
+
+        /* Custom Scrollbar for Sidebar */
+        .sidebar::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .sidebar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .sidebar::-webkit-scrollbar-thumb {
+            background: #E2E8F0;
+            border-radius: 10px;
+        }
+
+        .sidebar::-webkit-scrollbar-thumb:hover {
+            background: #CBD5E1;
         }
 
         .sidebar-logo {
@@ -217,13 +236,13 @@
     <aside class="sidebar">
         <div class="sidebar-logo">
             <i class="fas fa-graduation-cap"></i>
-            <span>EduAdmin</span>
+            <span>RuangAdmin</span>
         </div>
 
         <ul class="nav-menu">
             <li class="nav-item">
                 <a href="<?= base_url('admin') ?>" class="nav-link <?= uri_string() == 'admin' ? 'active' : '' ?>">
-                    <i class="fas fa-th-large"></i> Dashboard
+                    <i class="fas fa-th-large"></i> Beranda
                 </a>
             </li>
             <li class="nav-item">
@@ -243,6 +262,18 @@
                 <a href="<?= base_url('admin/articles') ?>"
                     class="nav-link <?= strpos(uri_string(), 'admin/articles') !== false ? 'active' : '' ?>">
                     <i class="fas fa-newspaper"></i> Manajemen Berita
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="<?= base_url('admin/pendaftaran') ?>"
+                    class="nav-link <?= strpos(uri_string(), 'admin/pendaftaran') !== false ? 'active' : '' ?>">
+                    <i class="fas fa-file-signature"></i> Manajemen Pendaftaran
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="<?= base_url('admin/messages') ?>"
+                    class="nav-link <?= strpos(uri_string(), 'admin/messages') !== false ? 'active' : '' ?>">
+                    <i class="fas fa-envelope"></i> Manajemen Pesan
                 </a>
             </li>
             <li class="nav-item">
@@ -282,7 +313,7 @@
         </div>
         <header class="header">
             <h1>
-                <?= $title ?? 'Dashboard' ?>
+                <?= $title ?? 'Beranda' ?>
             </h1>
             <div class="date-badge">
                 <i class="fas fa-calendar-day" style="margin-right: 0.5rem; color: var(--primary);"></i>
