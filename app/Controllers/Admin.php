@@ -14,11 +14,12 @@ class Admin extends Controller
         }
         $articleModel = new \App\Models\ArticleModel();
         $teacherModel = new \App\Models\TeacherModel();
+        $studentModel = new \App\Models\StudentModel();
 
         $data = [
             'title' => 'Dashboard Admin',
             'stats' => [
-                'students' => 1500,
+                'students' => $studentModel->countAll(),
                 'teachers' => $teacherModel->countAll(),
                 'news' => $articleModel->countAll(),
                 'registrations' => (new \App\Models\PendaftaranModel())->countAll(),

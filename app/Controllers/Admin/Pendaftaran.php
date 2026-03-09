@@ -40,6 +40,7 @@ class Pendaftaran extends BaseController
     public function updateStatus($id)
     {
         $pendaftaranModel = new PendaftaranModel();
+        $studentModel = new \App\Models\StudentModel();
         $status = $this->request->getPost('status');
 
         if (!in_array($status, ['pending', 'accepted', 'rejected'])) {
@@ -47,6 +48,29 @@ class Pendaftaran extends BaseController
         }
 
         $pendaftaranModel->update($id, ['status' => $status]);
+
+        // If accepted, moving to students table
+        if ($status === 'accepted') {
+            $reg = $pendaftaranModel->find($id);
+
+            // Check if already in students
+            $existing = $studentModel->where('registration_id', $id)->first();
+
+            if (!$existing) {
+                $studentModel->save([
+                    'registration_id' => $id,
+                    'nama_lengkap' => $reg['nama_lengkap'],
+                    'tempat_lahir' => $reg['tempat_lahir'],
+                    'tanggal_lahir' => $reg['tanggal_lahir'],
+                    'jenis_kelamin' => $reg['jenis_kelamin'],
+                    'jenjang' => $reg['jenjang'],
+                    'nama_wali' => $reg['nama_wali'],
+                    'no_wa' => $reg['no_wa'],
+                    'email' => $reg['email'],
+                    'alamat' => $reg['alamat'],
+                ]);
+            }
+        }
 
         return redirect()->back()->with('success', 'Status pendaftaran berhasil diperbarui.');
     }

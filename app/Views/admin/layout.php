@@ -277,8 +277,15 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a href="#" class="nav-link <?= uri_string() == 'admin/academics' ? 'active' : '' ?>">
-                    <i class="fas fa-calendar-alt"></i> Akademik
+                <a href="<?= base_url('admin/academic-calendar') ?>"
+                    class="nav-link <?= strpos(uri_string(), 'admin/academic-calendar') !== false ? 'active' : '' ?>">
+                    <i class="fas fa-calendar-alt"></i> Kalender Akademik
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="<?= base_url('admin/programs') ?>"
+                    class="nav-link <?= strpos(uri_string(), 'admin/programs') !== false ? 'active' : '' ?>">
+                    <i class="fas fa-list-check"></i> Program & Ekskul
                 </a>
             </li>
             <li class="nav-item">

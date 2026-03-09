@@ -12,6 +12,7 @@ $routes->get('curriculum', 'Home::curriculum');
 $routes->get('extracurricular', 'Home::extracurricular');
 $routes->get('news', 'Home::news');
 $routes->get('news/(:segment)', 'Home::newsDetail/$1');
+$routes->get('program/(:segment)', 'Home::programDetail/$1');
 $routes->get('contact', 'Contact::index');
 $routes->post('contact/submit', 'Contact::submit');
 $routes->get('register', 'Registration::index');
@@ -31,6 +32,12 @@ $routes->group('auth', function ($routes) {
 $routes->group('admin', function ($routes) {
     $routes->get('/', 'Admin::index');
     $routes->get('profile', 'Admin::profile');
+
+    // Student Management
+    $routes->group('students', function ($routes) {
+        $routes->get('/', 'Admin\Student::index');
+        $routes->get('delete/(:num)', 'Admin\Student::delete/$1');
+    });
 
     // Teacher Management
     $routes->group('teachers', function ($routes) {
@@ -84,5 +91,27 @@ $routes->group('admin', function ($routes) {
         $routes->get('/', 'Admin\Message::index');
         $routes->get('show/(:num)', 'Admin\Message::show/$1');
         $routes->get('delete/(:num)', 'Admin\Message::delete/$1');
+    });
+
+    // Academic Calendar Management
+    $routes->group('academic-calendar', function ($routes) {
+        $routes->get('/', 'Admin\AcademicCalendar::index');
+        $routes->post('store', 'Admin\AcademicCalendar::store');
+        $routes->post('update/(:num)', 'Admin\AcademicCalendar::update/$1');
+        $routes->get('delete/(:num)', 'Admin\AcademicCalendar::delete/$1');
+    });
+
+    // Program & Extracurricular CMS
+    $routes->group('programs', function ($routes) {
+        $routes->get('/', 'Admin\Program::index');
+        $routes->post('store', 'Admin\Program::storeProgram');
+        $routes->post('update/(:num)', 'Admin\Program::updateProgram/$1');
+        $routes->get('delete/(:num)', 'Admin\Program::deleteProgram/$1');
+    });
+
+    $routes->group('achievements', function ($routes) {
+        $routes->post('store', 'Admin\Program::storeAchievement');
+        $routes->post('update/(:num)', 'Admin\Program::updateAchievement/$1');
+        $routes->get('delete/(:num)', 'Admin\Program::deleteAchievement/$1');
     });
 });

@@ -135,7 +135,7 @@
 </style>
 
 <div class="card-grid">
-    <div class="admin-card">
+    <a href="<?= base_url('admin/students') ?>" class="admin-card" style="text-decoration: none; color: inherit;">
         <div class="card-icon"><i class="fas fa-user-graduate"></i></div>
         <div class="card-info">
             <h3>
@@ -143,8 +143,8 @@
             </h3>
             <p>Total Siswa</p>
         </div>
-    </div>
-    <div class="admin-card">
+    </a>
+    <a href="<?= base_url('admin/teachers') ?>" class="admin-card" style="text-decoration: none; color: inherit;">
         <div class="card-icon"><i class="fas fa-user-tie"></i></div>
         <div class="card-info">
             <h3>
@@ -152,8 +152,8 @@
             </h3>
             <p>Total Guru</p>
         </div>
-    </div>
-    <div class="admin-card">
+    </a>
+    <a href="<?= base_url('admin/articles') ?>" class="admin-card" style="text-decoration: none; color: inherit;">
         <div class="card-icon"><i class="fas fa-newspaper"></i></div>
         <div class="card-info">
             <h3>
@@ -161,8 +161,8 @@
             </h3>
             <p>Total Artikel</p>
         </div>
-    </div>
-    <div class="admin-card">
+    </a>
+    <a href="<?= base_url('admin/pendaftaran') ?>" class="admin-card" style="text-decoration: none; color: inherit;">
         <div class="card-icon"><i class="fas fa-file-signature"></i></div>
         <div class="card-info">
             <h3>
@@ -170,8 +170,8 @@
             </h3>
             <p>Pendaftaran</p>
         </div>
-    </div>
-    <div class="admin-card">
+    </a>
+    <a href="<?= base_url('admin/messages') ?>" class="admin-card" style="text-decoration: none; color: inherit;">
         <div class="card-icon"><i class="fas fa-envelope"></i></div>
         <div class="card-info">
             <h3>
@@ -179,7 +179,7 @@
             </h3>
             <p>Pesan Masuk</p>
         </div>
-    </div>
+    </a>
 </div>
 
 <div class="chart-grid">

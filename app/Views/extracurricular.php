@@ -28,53 +28,29 @@
         </div>
 
         <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 2.5rem; margin-top: 4rem;">
-            <!-- Olahraga -->
-            <div class="activity-card"
-                style="background: white; border-radius: 2rem; padding: 3rem; text-align: center; border: 1px solid #F1F5F9; transition: all 0.3s ease;">
-                <div
-                    style="width: 80px; height: 80px; background: #FFF7ED; color: #EA580C; border-radius: 20px; display: flex; align-items: center; justify-content: center; margin: 0 auto 2rem; font-size: 2rem;">
-                    <i class="fas fa-basketball-ball"></i>
+            <?php foreach ($clubs as $club): ?>
+                <div class="activity-card"
+                    style="background: white; border-radius: 2rem; padding: 3rem; text-align: center; border: 1px solid #F1F5F9; transition: all 0.3s ease;">
+                    <div
+                        style="width: 80px; height: 80px; background: #F8FAFC; color: var(--primary); border-radius: 20px; display: flex; align-items: center; justify-content: center; margin: 0 auto 2rem; font-size: 2rem;">
+                        <i class="<?= $club['icon'] ?>"></i>
+                    </div>
+                    <h3><?= $club['title'] ?></h3>
+                    <p style="color: var(--text-sub); margin-top: 1rem; margin-bottom: 2rem;"><?= $club['description'] ?>
+                    </p>
+                    <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 0.5rem; margin-bottom: 2rem;">
+                        <?php if ($club['tags']): ?>
+                            <?php foreach (explode(',', $club['tags']) as $tag): ?>
+                                <span class="tag"><?= trim($tag) ?></span>
+                            <?php endforeach; ?>
+                        <?php endif; ?>
+                    </div>
+                    <a href="<?= base_url('program/' . $club['slug']) ?>"
+                        style="display: inline-block; padding: 0.8rem 2rem; background: var(--primary); color: white; border-radius: 50px; text-decoration: none; font-weight: 600; font-size: 0.9rem; transition: 0.3s;">
+                        Lihat Detail
+                    </a>
                 </div>
-                <h3>Olahraga</h3>
-                <p style="color: var(--text-sub); margin-top: 1rem; margin-bottom: 2rem;">Membangun kesehatan fisik,
-                    disiplin, dan sportivitas melalui tim unggulan sekolah.</p>
-                <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 0.5rem;">
-                    <span class="tag">Basket</span> <span class="tag">Futsal</span> <span class="tag">Renang</span>
-                    <span class="tag">Panahan</span>
-                </div>
-            </div>
-
-            <!-- Seni & Budaya -->
-            <div class="activity-card"
-                style="background: white; border-radius: 2rem; padding: 3rem; text-align: center; border: 1px solid #F1F5F9; transition: all 0.3s ease;">
-                <div
-                    style="width: 80px; height: 80px; background: #EFF6FF; color: #2563EB; border-radius: 20px; display: flex; align-items: center; justify-content: center; margin: 0 auto 2rem; font-size: 2rem;">
-                    <i class="fas fa-paint-brush"></i>
-                </div>
-                <h3>Seni & Budaya</h3>
-                <p style="color: var(--text-sub); margin-top: 1rem; margin-bottom: 2rem;">Mengekspresikan kreativitas
-                    dan melestarikan budaya melalui berbagai cabang kesenian.</p>
-                <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 0.5rem;">
-                    <span class="tag">Paduan Suara</span> <span class="tag">Tari Tradisional</span> <span
-                        class="tag">Fotografi</span> <span class="tag">Teater</span>
-                </div>
-            </div>
-
-            <!-- Teknologi & Sains -->
-            <div class="activity-card"
-                style="background: white; border-radius: 2rem; padding: 3rem; text-align: center; border: 1px solid #F1F5F9; transition: all 0.3s ease;">
-                <div
-                    style="width: 80px; height: 80px; background: #ECFDF5; color: #10B981; border-radius: 20px; display: flex; align-items: center; justify-content: center; margin: 0 auto 2rem; font-size: 2rem;">
-                    <i class="fas fa-robot"></i>
-                </div>
-                <h3>Sains & Teknologi</h3>
-                <p style="color: var(--text-sub); margin-top: 1rem; margin-bottom: 2rem;">Menyongsong masa depan dengan
-                    penguasaan teknologi mutakhir dan eksplorasi ilmiah.</p>
-                <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 0.5rem;">
-                    <span class="tag">Robotika</span> <span class="tag">Coding Club</span> <span
-                        class="tag">Astronomi</span>
-                </div>
-            </div>
+            <?php endforeach; ?>
         </div>
     </div>
 </section>
@@ -89,51 +65,17 @@
         </div>
 
         <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 3rem; margin-top: 4rem;">
-            <div
-                style="display: flex; gap: 2rem; align-items: flex-start; background: rgba(255,255,255,0.05); padding: 2.5rem; border-radius: 2rem; border: 1px solid rgba(255,255,255,0.1);">
-                <div style="font-size: 3rem; color: #F59E0B;"><i class="fas fa-trophy"></i></div>
-                <div>
-                    <h4 style="font-size: 1.25rem; margin-bottom: 0.5rem;">Juara 1 Kejuaraan Basket Provinsi</h4>
-                    <p style="color: #94A3B8; font-size: 0.95rem;">Tim putra berhasil mempertahankan gelar juara selama
-                        3 tahun berturut-turut.</p>
-                    <div style="margin-top: 1rem; font-weight: 700; color: #059669;">Desember 2023</div>
+            <?php foreach ($achievements as $ach): ?>
+                <div
+                    style="display: flex; gap: 2rem; align-items: flex-start; background: rgba(255,255,255,0.05); padding: 2.5rem; border-radius: 2rem; border: 1px solid rgba(255,255,255,0.1);">
+                    <div style="font-size: 3rem; color: <?= $ach['color'] ?>;"><i class="<?= $ach['icon'] ?>"></i></div>
+                    <div>
+                        <h4 style="font-size: 1.25rem; margin-bottom: 0.5rem;"><?= $ach['title'] ?></h4>
+                        <p style="color: #94A3B8; font-size: 0.95rem;"><?= $ach['description'] ?></p>
+                        <div style="margin-top: 1rem; font-weight: 700; color: #059669;"><?= $ach['date_event'] ?></div>
+                    </div>
                 </div>
-            </div>
-
-            <div
-                style="display: flex; gap: 2rem; align-items: flex-start; background: rgba(255,255,255,0.05); padding: 2.5rem; border-radius: 2rem; border: 1px solid rgba(255,255,255,0.1);">
-                <div style="font-size: 3rem; color: #3B82F6;"><i class="fas fa-guitar"></i></div>
-                <div>
-                    <h4 style="font-size: 1.25rem; margin-bottom: 0.5rem;">Gold Award - Jakarta Youth Music Festival
-                    </h4>
-                    <p style="color: #94A3B8; font-size: 0.95rem;">Grup band sekolah terpilih sebagai penampilan terbaik
-                        dari 100 peserta se-Indonesia.</p>
-                    <div style="margin-top: 1rem; font-weight: 700; color: #059669;">November 2023</div>
-                </div>
-            </div>
-
-            <div
-                style="display: flex; gap: 2rem; align-items: flex-start; background: rgba(255,255,255,0.05); padding: 2.5rem; border-radius: 2rem; border: 1px solid rgba(255,255,255,0.1);">
-                <div style="font-size: 3rem; color: #10B981;"><i class="fas fa-microchip"></i></div>
-                <div>
-                    <h4 style="font-size: 1.25rem; margin-bottom: 0.5rem;">The Best Innovative Robot - World Robot Games
-                    </h4>
-                    <p style="color: #94A3B8; font-size: 0.95rem;">Klub Robotika memenangkan penghargaan internasional
-                        atas inovasi robot pemilah sampah.</p>
-                    <div style="margin-top: 1rem; font-weight: 700; color: #059669;">Agustus 2023</div>
-                </div>
-            </div>
-
-            <div
-                style="display: flex; gap: 2rem; align-items: flex-start; background: rgba(255,255,255,0.05); padding: 2.5rem; border-radius: 2rem; border: 1px solid rgba(255,255,255,0.1);">
-                <div style="font-size: 3rem; color: #EC4899;"><i class="fas fa-palette"></i></div>
-                <div>
-                    <h4 style="font-size: 1.25rem; margin-bottom: 0.5rem;">Juara 2 Lomba Tari Tradisional Nasional</h4>
-                    <p style="color: #94A3B8; font-size: 0.95rem;">Tim tari berhasil memukau juri dengan aransemen tari
-                        kolosal perpaduan adat Nusantara.</p>
-                    <div style="margin-top: 1rem; font-weight: 700; color: #059669;">Oktober 2023</div>
-                </div>
-            </div>
+            <?php endforeach; ?>
         </div>
     </div>
 </section>

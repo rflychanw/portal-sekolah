@@ -30,28 +30,18 @@
                     Cambridge untuk memastikan siswa mendapatkan pondasi pengetahuan yang luas namun tetap memiliki
                     identitas karakter yang kuat.</p>
 
-                <div
-                    style="background: white; padding: 2rem; border-radius: 1.5rem; border: 1px solid #E2E8F0; margin-bottom: 1.5rem;">
-                    <h4 style="color: var(--primary); margin-bottom: 1rem;"><i class="fas fa-microscope"
-                            style="margin-right: 0.8rem;"></i> Fokus STEM</h4>
-                    <p style="font-size: 0.9375rem; color: var(--text-sub);">Menekankan penguasaan Sains, Teknologi,
-                        Rekayasa, dan Matematika dengan metode eksperimen langsung (hands-on learning).</p>
-                </div>
-
-                <div
-                    style="background: white; padding: 2rem; border-radius: 1.5rem; border: 1px solid #E2E8F0; margin-bottom: 1.5rem;">
-                    <h4 style="color: var(--primary); margin-bottom: 1rem;"><i class="fas fa-language"
-                            style="margin-right: 0.8rem;"></i> Kemampuan Bahasa</h4>
-                    <p style="font-size: 0.9375rem; color: var(--text-sub);">Program bilingual (Indonesia-Inggris) untuk
-                        membekali siswa dengan kemampuan komunikasi lintas budaya yang lancar.</p>
-                </div>
-
-                <div style="background: white; padding: 2rem; border-radius: 1.5rem; border: 1px solid #E2E8F0;">
-                    <h4 style="color: var(--primary); margin-bottom: 1rem;"><i class="fas fa-chess"
-                            style="margin-right: 0.8rem;"></i> Pengembangan Karakter</h4>
-                    <p style="font-size: 0.9375rem; color: var(--text-sub);">Pendidikan berbasis nilai yang menumbuhkan
-                        disiplin, integritas, dan rasa empati pada sesama.</p>
-                </div>
+                <?php foreach ($programs as $prog): ?>
+                    <div
+                        style="background: white; padding: 2rem; border-radius: 1.5rem; border: 1px solid #E2E8F0; margin-bottom: 1.5rem;">
+                        <h4 style="color: var(--primary); margin-bottom: 1rem;"><i class="<?= $prog['icon'] ?>"
+                                style="margin-right: 0.8rem;"></i> <?= $prog['title'] ?></h4>
+                        <p style="font-size: 0.9375rem; color: var(--text-sub);"><?= $prog['description'] ?></p>
+                        <a href="<?= base_url('program/' . $prog['slug']) ?>"
+                            style="display: inline-block; padding: 0.6rem 1.5rem; background: var(--primary); color: white; border-radius: 50px; text-decoration: none; font-weight: 600; font-size: 0.85rem; margin-top: 1rem; transition: 0.3s;">
+                            Selengkapnya
+                        </a>
+                    </div>
+                <?php endforeach; ?>
             </div>
         </div>
     </div>
@@ -84,5 +74,71 @@
         </div>
     </div>
 </section>
+
+<!-- Academic Calendar Section -->
+<section id="calendar" class="section">
+    <div class="container">
+        <div class="section-title">
+            <h2>Kalender Akademik</h2>
+            <p>Jadwal kegiatan penting sekolah selama tahun ajaran berlangsung.</p>
+        </div>
+
+        <div
+            style="background: white; padding: 2.5rem; border-radius: 2rem; border: 1px solid #E2E8F0; box-shadow: 0 10px 30px rgba(0,0,0,0.05);">
+            <!-- FullCalendar Container -->
+            <div id='public-calendar' style="min-height: 500px;"></div>
+
+            <div style="margin-top: 3rem;">
+                <h3 style="margin-bottom: 2rem; font-size: 1.5rem;">Kegiatan Mendatang</h3>
+                <div class="news-grid" style="grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));">
+                    <?php if (empty($events)): ?>
+                        <p style="text-align: center; grid-column: 1/-1; color: var(--text-sub); padding: 2rem;">Tidak ada
+                            kegiatan terdekat.</p>
+                    <?php else: ?>
+                        <?php foreach (array_slice($events, 0, 3) as $event): ?>
+                            <div
+                                style="background: #F8FAFC; padding: 2rem; border-radius: 1.5rem; border-left: 5px solid <?= $event['color'] ?>;">
+                                <div style="color: var(--primary); font-weight: 700; margin-bottom: 0.5rem;">
+                                    <?= date('d M Y', strtotime($event['start_date'])) ?>
+                                    <?= $event['end_date'] ? ' - ' . date('d M Y', strtotime($event['end_date'])) : '' ?>
+                                </div>
+                                <h4 style="font-size: 1.25rem; margin-bottom: 1rem;"><?= $event['title'] ?></h4>
+                                <p style="font-size: 0.9375rem; color: var(--text-sub);"><?= $event['description'] ?></p>
+                            </div>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- FullCalendar for Public View -->
+<link href='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.css' rel='stylesheet' />
+<script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js'></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const calendarEl = document.getElementById('public-calendar');
+        if (calendarEl) {
+            const calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: 'dayGridMonth',
+                locale: 'id',
+                height: 'auto',
+                events: [
+                    <?php foreach ($events as $event): ?>
+                                {
+                            title: '<?= htmlspecialchars($event['title']) ?>',
+                            start: '<?= $event['start_date'] ?>',
+                            end: '<?= $event['end_date'] ? date('Y-m-d', strtotime($event['end_date'] . ' +1 day')) : $event['start_date'] ?>',
+                            backgroundColor: '<?= $event['color'] ?>',
+                            borderColor: '<?= $event['color'] ?>',
+                        },
+                    <?php endforeach; ?>
+                ]
+            });
+            calendar.render();
+        }
+    });
+</script>
 
 <?= $this->endSection() ?>

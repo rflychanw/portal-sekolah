@@ -16,7 +16,14 @@ class Home extends BaseController
 
     public function academics(): string
     {
-        return view('academics');
+        $calendarModel = new \App\Models\AcademicCalendarModel();
+        $programModel = new \App\Models\ProgramModel();
+        $data = [
+            'events' => $calendarModel->orderBy('start_date', 'ASC')->findAll(),
+            'programs' => $programModel->where('type', 'academic')->orderBy('order_rank', 'ASC')->findAll(),
+            'title' => 'Akademik'
+        ];
+        return view('academics', $data);
     }
 
     public function news(): string
@@ -52,9 +59,35 @@ class Home extends BaseController
         return view('curriculum', $data);
     }
 
+    public function programDetail($slug): string
+    {
+        $programModel = new \App\Models\ProgramModel();
+        $achievementModel = new \App\Models\AchievementModel();
+
+        $program = $programModel->where('slug', $slug)->first();
+
+        if (!$program) {
+            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
+        }
+
+        $data = [
+            'program' => $program,
+            'achievements' => $achievementModel->where('program_id', $program['id'])->findAll(),
+            'title' => $program['title']
+        ];
+
+        return view('program_detail', $data);
+    }
+
     public function extracurricular(): string
     {
-        $data = ['title' => 'Ekstrakurikuler'];
+        $programModel = new \App\Models\ProgramModel();
+        $achievementModel = new \App\Models\AchievementModel();
+        $data = [
+            'clubs' => $programModel->where('type', 'extracurricular')->orderBy('order_rank', 'ASC')->findAll(),
+            'achievements' => $achievementModel->orderBy('created_at', 'DESC')->findAll(),
+            'title' => 'Ekstrakurikuler'
+        ];
         return view('extracurricular', $data);
     }
 
